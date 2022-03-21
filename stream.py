@@ -97,7 +97,7 @@ def main():
         
         principals = rates[(rates.index.str.contains('BTC')) | rates.index.str.contains('ETH')]
 
-        fig = px.line(top[:10], x='Instrument', y= 'Annualized rate', width=1000, height=600,
+        fig = px.line(top[:10], x='Instrument', y= 'Annualized rate',# width=1000, height=600,
                     color_discrete_sequence = ['orange','red'], title='Rates')
         #fig.update_xaxes(showgrid=False)  
         #fig.update_yaxes(showgrid=False)
