@@ -29,7 +29,8 @@ def calculate_rates(df, coin, rates):
         delivery_date = pd.to_datetime(f'{maturity[-2:]}-{maturity[:2]}-2022')
         days_to_delivery = (delivery_date - pd.to_datetime('today')).days
         rates.loc[f'{coin}-{maturity}', 'Direct rate'] = (df.loc[f'{coin}-{maturity}','price']/df.loc[f'{coin}-PERP','price'] - 1) * 100
-        rates.loc[f'{coin}-{maturity}', 'Annualized rate'] = (((1+rates.loc[f'{coin}-{maturity}', 'Direct rate']/100)**(365/days_to_delivery))-1)*100
+        if days_to_delivery>0:
+            rates.loc[f'{coin}-{maturity}', 'Annualized rate'] = (((1+rates.loc[f'{coin}-{maturity}', 'Direct rate']/100)**(365/days_to_delivery))-1)*100
     return rates
 
 def market_data(df):
@@ -60,7 +61,8 @@ def deribit_rates(currencies):
                 rates.loc[i,'Direct rate'] = (quotes.loc[i,'price'] / quotes.loc[f'{currency}-PERPETUAL','price']-1)*100
                 rates.loc[i, 'Maturity'] = pd.to_datetime(i.split('-')[1])
                 rates.loc[i, 'Days to maturity'] = (rates.loc[i, 'Maturity']-pd.to_datetime('today')).days
-                rates.loc[i, 'Annualized rate'] = (((1+rates.loc[i, 'Direct rate']/100)**(365/rates.loc[i, 'Days to maturity']))-1)*100
+                if rates.loc[i, 'Days to maturity']>0:
+                    rates.loc[i, 'Annualized rate'] = (((1+rates.loc[i, 'Direct rate']/100)**(365/rates.loc[i, 'Days to maturity']))-1)*100
                 
     rates = rates.sort_values(by='Annualized rate', ascending=False)
     rates['Instrument'] = rates.index
