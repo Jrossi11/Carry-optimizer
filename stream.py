@@ -78,7 +78,7 @@ def main():
         rates = pd.DataFrame()
         for coin in instruments:
             df = filter_availables(all_futures, coin)
-            if len(df.index) > 2:
+            if len(df.index) > 1:
                 rates = calculate_rates(df, coin, rates)
                 
         top = rates.sort_values(by='Annualized rate', ascending=False)
