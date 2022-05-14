@@ -20,7 +20,7 @@ def calculate_rates(df, coin, rates):
             rates.loc[f'{coin}-{maturity}', 'Annualized rate'] = (((1+rates.loc[f'{coin}-{maturity}', 'Direct rate']/100)**(365/days_to_delivery))-1)*100
     return rates
 
-def get_futures()
+def get_futures():
     endpoint = 'https://ftx.com/api'
     all_markets = requests.get(f'{endpoint}/markets').json()
     all_markets = pd.DataFrame(all_markets['result'])
