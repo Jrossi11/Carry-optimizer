@@ -4,6 +4,7 @@ import pandas as pd
 import plotly.express as px
 import hmac
 import requests
+from algo_functions import *
 st.set_page_config(layout="wide")
 
 
@@ -12,6 +13,7 @@ st.title('Carry trade optimizer')
 plot_slot = st.empty()
 df_slot = st.empty()
 deribit_slot = st.empty()
+funding_rates_slot = st.empty()
 
 endpoint = 'https://ftx.com/api'
 all_markets = requests.get(f'{endpoint}/markets').json()
@@ -74,7 +76,9 @@ def main():
     while True:
         all_futures = all_markets[all_markets['type']=='future'][['price', 'underlying']]
         instruments = list(set([i.split('-')[0] for i in all_futures.index]))
-
+        
+        funding_rates = get_funding_rates()
+        
         rates = pd.DataFrame()
         for coin in instruments:
             df = filter_availables(all_futures, coin)
@@ -96,6 +100,8 @@ def main():
         top = top.append(d_rates)
         top = top.sort_values(by='Annualized rate', ascending=False)
         df_slot.dataframe(top, width=1500, height=600)
+        
+        funding_rates_slot.dataframe(funding_rates)
         
         principals = rates[(rates.index.str.contains('BTC')) | rates.index.str.contains('ETH')]
 
