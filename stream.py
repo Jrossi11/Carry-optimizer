@@ -8,7 +8,7 @@ st.set_page_config(layout="wide")
 st.title('Carry trade optimizer')
 plot_slot = st.empty()
 df_slot = st.empty()
-st.wirte('Top funding rates')
+st.write('Top funding rates')
 
 funding_rates_slot = st.empty()
 
