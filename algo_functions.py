@@ -53,7 +53,7 @@ def d_rates(currencies):
     rates = rates.sort_values(by='Annualized rate', ascending=False)
     rates['Instrument'] = rates.index
     rates.index = list(range(1,len(rates)+1))
-    return  rates[['Coin', 'Days to maturity', 'Direct rate', 'Annualized rate', 'Instrument', 'Exchange']]
+    return rates[['Coin', 'Days to maturity', 'Direct rate', 'Annualized rate', 'Instrument', 'Exchange']]
 
 def comparison_df(all_futures):
     rates = pd.DataFrame()
