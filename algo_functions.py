@@ -32,6 +32,7 @@ def market_data(df):
     response = pd.DataFrame(requests.get(url='https://test.deribit.com/api/v2/public/ticker?instrument_name=BTC-PERPETUAL').json())[['result']]
     timestamp = str(pd.to_datetime(str(response.loc['timestamp'][0]), unit='ms'))[:-7]
     df.loc[timestamp,'price'] = response.loc['last_price'][0]
+    
 def d_rates(currencies):
     rates = pd.DataFrame()
     for currency in currencies:
