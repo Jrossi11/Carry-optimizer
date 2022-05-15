@@ -71,7 +71,7 @@ def comparison_df(all_futures):
     top.index = list(range(1,1+len(top)))
     top = top[['Coin', 'Days to maturity', 'Direct rate', 'Annualized rate', 'Instrument', 'Exchange']]
     deribit_rates = d_rates(['BTC', 'ETH', 'SOL'])
-    top = top.append(d_rates)
+    top = top.append(deribit_rates)
     return top.sort_values(by='Annualized rate', ascending=False)
     
 def get_instruments(coin):
