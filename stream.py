@@ -18,9 +18,8 @@ def main():
         
         df_slot.dataframe(basis_rates, width=1500, height=600)
         funding_rates_slot.dataframe(get_funding_rates())
-        fig = px.line(top[:10], x='Instrument', y= 'Annualized rate',# width=1000, height=600,
-                    color_discrete_sequence = ['orange','red'], title='Rates')
-        plot_slot.plotly_chart(fig)
+        plot_slot.plotly_chart(px.line(basis_rates[:10], x='Instrument', y= 'Annualized rate',# width=1000, height=600,
+                    color_discrete_sequence = ['orange','red'], title='Rates'))
         time.sleep(10)
         yield
 
