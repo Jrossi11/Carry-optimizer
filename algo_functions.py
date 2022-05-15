@@ -77,7 +77,7 @@ def comparison_df(all_futures):
 def get_instruments(coin):
     response = pd.DataFrame(requests.get(url=f'https://www.deribit.com/api/v2/public/get_instruments?currency={coin}&expired=false&kind=future').json())[['result']]
     return [pd.DataFrame(response.loc[i, 'result'], index=[0])['instrument_name'].values[0] for i in range(len(response))]
-
+    
 def get_price(instrument, df):
     response = pd.DataFrame(requests.get(url=f'https://www.deribit.com/api/v2/public/ticker?instrument_name={instrument}').json())[['result']]
     df.loc[instrument,'price'] = response.loc['last_price'][0]
