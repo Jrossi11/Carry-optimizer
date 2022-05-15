@@ -3,7 +3,7 @@ import streamlit as st
 from algo_functions import *
 st.set_page_config(layout="wide")
 
-
+asdjkhflkajshdf
 #col1, col2 = st.columns([1, 2])
 st.title('Carry trade optimizer')
 plot_slot = st.empty()
