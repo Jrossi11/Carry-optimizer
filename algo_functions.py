@@ -29,7 +29,7 @@ def get_futures():
     return all_futures
 
 def market_data(df):
-    response = pd.DataFrame(requests.get(url='https://test.deribit.com/api/v2/public/ticker?instrument_name=BTC-PERPETUAL').json())[['result']]
+    response = pd.DataFrame(requests.get(url='https://www.deribit.com/api/v2/public/ticker?instrument_name=BTC-PERPETUAL').json())[['result']]
     timestamp = str(pd.to_datetime(str(response.loc['timestamp'][0]), unit='ms'))[:-7]
     df.loc[timestamp,'price'] = response.loc['last_price'][0]
     
@@ -75,11 +75,11 @@ def comparison_df(all_futures):
     return top.sort_values(by='Annualized rate', ascending=False)
     
 def get_instruments(coin):
-    response = pd.DataFrame(requests.get(url=f'https://deribit.com/api/v2/public/get_instruments?currency={coin}&expired=false&kind=future').json())[['result']]
+    response = pd.DataFrame(requests.get(url=f'https://www.deribit.com/api/v2/public/get_instruments?currency={coin}&expired=false&kind=future').json())[['result']]
     return [pd.DataFrame(response.loc[i, 'result'], index=[0])['instrument_name'].values[0] for i in range(len(response))]
 
 def get_price(instrument, df):
-    response = pd.DataFrame(requests.get(url=f'https://deribit.com/api/v2/public/ticker?instrument_name={instrument}').json())[['result']]
+    response = pd.DataFrame(requests.get(url=f'https://www.deribit.com/api/v2/public/ticker?instrument_name={instrument}').json())[['result']]
     df.loc[instrument,'price'] = response.loc['last_price'][0]
     return df
 
