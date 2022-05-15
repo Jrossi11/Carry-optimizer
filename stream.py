@@ -20,6 +20,7 @@ def main():
         funding_rates_slot.dataframe(get_funding_rates())
         plot_slot.plotly_chart(px.line(basis_rates[:10], x='Instrument', y= 'Annualized rate',# width=1000, height=600,
                     color_discrete_sequence = ['orange','red'], title='Rates'))
+        pd.to_csv(get_funding_rates())
         time.sleep(10)
         yield
 
