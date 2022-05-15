@@ -75,15 +75,13 @@ def comparison_df(all_futures):
     return top.sort_values(by='Annualized rate', ascending=False)
     
 def get_instruments(coin):
-    response = pd.DataFrame(requests.get(url=f'https://test.deribit.com/api/v2/public/get_instruments?currency={coin}&expired=false&kind=future').json())[['result']]
+    response = pd.DataFrame(requests.get(url=f'https://deribit.com/api/v2/public/get_instruments?currency={coin}&expired=false&kind=future').json())[['result']]
     return [pd.DataFrame(response.loc[i, 'result'], index=[0])['instrument_name'].values[0] for i in range(len(response))]
 
 def get_price(instrument, df):
-    response = pd.DataFrame(requests.get(url=f'https://test.deribit.com/api/v2/public/ticker?instrument_name={instrument}').json())[['result']]
+    response = pd.DataFrame(requests.get(url=f'https://deribit.com/api/v2/public/ticker?instrument_name={instrument}').json())[['result']]
     df.loc[instrument,'price'] = response.loc['last_price'][0]
     return df
-
-
 
 def get_funding_rates():
     df = requests.get('https://ftx.com/api/funding_rates').json()
@@ -91,4 +89,5 @@ def get_funding_rates():
     df = df.set_index('time').sort_values(by='rate', ascending=False)
     df = df[df.index==max(df.index)]
     df = df[df.rate>0]
+    df['Daily rate'] = df['rate']
     return df
