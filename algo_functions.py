@@ -89,5 +89,5 @@ def get_funding_rates():
     df = df.set_index('time').sort_values(by='rate', ascending=False)
     df = df[df.index==max(df.index)]
     df = df[df.rate>0]
-    df['Daily rate'] = df['rate']
+    df['Daily rate'] = df['rate']*24
     return df
